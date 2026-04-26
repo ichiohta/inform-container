@@ -8,7 +8,7 @@
     },
 
     "postCreateCommand": {
-        "deps": "npm install -g @anthropic-ai/claude-code",
+        "deps": "npm install -g @anthropic-ai/claude-code"
     },
     "build": {
         "dockerfile": "DOCKERFILE"
