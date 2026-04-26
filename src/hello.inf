@@ -1,0 +1,10 @@
+Constant Story "Hello World";
+
+Include "Parser";
+Include "VerbLib";
+
+[ Initialise;
+    print "Hello, World!^";
+];
+
+Include "Grammar";

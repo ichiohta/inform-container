@@ -1,0 +1,48 @@
+FROM --platform=linux/amd64 ubuntu:latest
+
+# Install build dependencies
+RUN apt-get update \
+  && export DEBIAN_FRONTEND=noninteractive \
+  && apt-get install -y build-essential git clang frotz
+
+# Set clang as the default compiler for the entire build process
+ENV CC=clang
+
+# ------------------------------------------------------------ Frotz
+
+# Set up frotz for root user
+RUN echo 'setpriv --reuid=1000 --regid=1000 --clear-groups /usr/games/frotz $*' > /usr/local/bin/frotz \
+    && chmod +x /usr/local/bin/frotz
+
+# ------------------------------------------------------------ Inform 7
+
+RUN git clone https://github.com/ganelson/inweb.git /tmp/inweb \
+  && cd /tmp \
+  && bash inweb/scripts/first.sh linux 
+
+RUN git clone https://github.com/ganelson/intest.git /tmp/intest \
+  && cd /tmp \
+  && bash intest/scripts/first.sh
+
+RUN git clone https://github.com/ganelson/inform.git /tmp/inform \
+  && cd /tmp/inform \
+  && bash scripts/first.sh \
+  && mv inform7/Tangled/inform7 /usr/local/bin \
+  && mv inform6/Tangled/inform6 /usr/local/bin \
+  && mv inblorb/Tangled/inblorb /usr/local/bin
+
+# ------------------------------------------------------------ Inform 6 Libraries
+
+# Add the Inform 6 Standard Library
+RUN mkdir -p /usr/local/share/inform6/lib \
+  && git clone https://gitlab.com/DavidGriffith/inform6lib.git /usr/local/share/inform6/lib
+  && cd /usr/local/share/inform6/lib \
+  && ln -s english.h English.h \
+  && ln -s parser.h Parser.h \
+  && ln -s verblib.h VerbLib.h \
+  && ln -s grammar.h Grammar.h
+
+# Add the PunyInform Library
+RUN mkdir -p /usr/local/share/PunyInform \
+  && git clone https://github.com/johanberntsson/PunyInform.git /usr/local/share/PunyInform
+

@@ -1,0 +1,23 @@
+{
+    "name": "inform-6-template",
+
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "22"
+        }
+    },
+
+    "postCreateCommand": {
+        "deps": "npm install -g @anthropic-ai/claude-code",
+    },
+    "build": {
+        "dockerfile": "DOCKERFILE"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "natrium729.inform-6"
+            ]
+        }
+    }
+}
