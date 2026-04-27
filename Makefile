@@ -31,6 +31,6 @@ $(BUILDDIR)/hellop.z3: $(SRCDIR)/hellop.inf | $(BUILDDIR)
 	inform6 -v3 +include_path=$(PUNYINFORM_LIBPATH) $(SRCDIR)/hellop.inf $(BUILDDIR)/hellop.z3
 
 $(BUILDDIR)/hellop.d64: $(BUILDDIR)/hellop.z3 | $(BUILDDIR)
-	ruby /usr/local/share/ozmoo/make.rb -t:c64 -ss1:"Hello World" -ss2:"Interactive Fiction" -ss3:"By You" -sw:6 -dm:0 $(BUILDDIR)/hellop.z3
+	ozmoo -t:c64 -ss1:"Hello World" -ss2:"Interactive Fiction" -ss3:"By You" -sw:6 -dm:0 $(BUILDDIR)/hellop.z3
 	mv c64_hellop.d64 $(BUILDDIR)/hellop.d64
 
