@@ -3,7 +3,14 @@ FROM --platform=linux/amd64 ubuntu:latest
 # Install build dependencies
 RUN apt-get update \
   && export DEBIAN_FRONTEND=noninteractive \
-  && apt-get install -y build-essential git clang frotz
+  && apt-get install -y \
+    build-essential \
+    git \
+    clang \
+    frotz \
+    acme \
+    ruby \
+    vice
 
 # Set clang as the default compiler for the entire build process
 ENV CC=clang
@@ -13,6 +20,16 @@ ENV CC=clang
 # Set up frotz for root user
 RUN echo 'setpriv --reuid=1000 --regid=1000 --clear-groups /usr/games/frotz $*' > /usr/local/bin/frotz \
     && chmod +x /usr/local/bin/frotz
+
+# ------------------------------------------------------------ Ozmoo
+
+RUN git clone https://github.com/johanberntsson/ozmoo.git /usr/local/share/ozmoo
+
+# ------------------------------------------------------------ Exomizer
+
+RUN git clone https://bitbucket.org/magli143/exomizer.git /usr/local/share/ozmoo/exomizer \
+  && cd /usr/local/share/ozmoo/exomizer/src \
+  && make
 
 # ------------------------------------------------------------ Inform 7
 
