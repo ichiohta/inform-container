@@ -1,0 +1,26 @@
+Constant Story "Hello World";
+Constant Headline "^A minimal PunyInform example.^";
+
+! PunyInform switches — set before including the library
+Constant INITIAL_LOCATION_VALUE = StartRoom;
+
+Include "globals.h";
+Include "puny.h";
+
+! ---------- world ----------
+
+Object StartRoom "Forest Clearing"
+  with description "You stand in a sunlit forest clearing.
+                    A wooden sign is planted in the ground.",
+  has  light;
+
+Object -> sign "wooden sign"
+  with name 'wooden' 'sign',
+       description "It reads: ^Hello, World!^",
+  has  static;
+
+! ---------- entry point ----------
+
+[ Initialise;
+    location = StartRoom;
+];

@@ -23,7 +23,9 @@ RUN echo 'setpriv --reuid=1000 --regid=1000 --clear-groups /usr/games/frotz $*' 
 
 # ------------------------------------------------------------ Ozmoo
 
-RUN git clone https://github.com/johanberntsson/ozmoo.git /usr/local/share/ozmoo
+RUN git clone https://github.com/johanberntsson/ozmoo.git /usr/local/share/ozmoo \
+  && echo 'ruby /usr/local/share/ozmoo/make.rb $@' > /usr/local/bin/ozmoo \
+  && chmod +x /usr/local/bin/ozmoo
 
 # ------------------------------------------------------------ Exomizer
 
