@@ -7,7 +7,6 @@ RUN apt-get update \
     build-essential \
     git \
     clang \
-    frotz \
     acme \
     ruby \
     vice
@@ -15,18 +14,19 @@ RUN apt-get update \
 # Set clang as the default compiler for the entire build process
 ENV CC=clang
 
-# ------------------------------------------------------------ Frotz
-
-# Set up frotz for root user
-RUN echo 'setpriv --reuid=1000 --regid=1000 --clear-groups /usr/games/frotz $*' > /usr/local/bin/frotz \
-    && chmod +x /usr/local/bin/frotz
-
 # ------------------------------------------------------------ Ozmoo
 
 RUN git clone https://github.com/johanberntsson/ozmoo.git /usr/local/share/ozmoo \
   && printf '#!%s\n%s' "$(which ruby)" "$(cat /usr/local/share/ozmoo/make.rb)" > /usr/local/share/ozmoo/make_shebang.rb \
   && chmod +x /usr/local/share/ozmoo/make_shebang.rb \
   && ln -s /usr/local/share/ozmoo/make_shebang.rb /usr/local/bin/ozmoo
+
+# ------------------------------------------------------------ Krebf
+
+RUN git clone https://github.com/fredrikr/krebf.git /usr/local/share/krebf \
+  && printf '#!%s\n%s' "$(which ruby)" "$(cat /usr/local/share/krebf/krebf.rb)" > /usr/local/share/krebf/krebf_shebang.rb \
+  && chmod +x /usr/local/share/krebf/krebf_shebang.rb \
+  && ln -s /usr/local/share/krebf/krebf_shebang.rb /usr/local/bin/krebf
 
 # ------------------------------------------------------------ Exomizer
 
